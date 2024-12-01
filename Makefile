@@ -15,7 +15,8 @@ test-unit:
 test-api:
 	docker network create calc-test-api || true
 	docker run -d --network calc-test-api --env PYTHONPATH=/opt/calc --name apiserver --env FLASK_APP=app/api.py -p 5000:5000 -w /opt/calc calculator-app:latest flask run --host=0.0.0.0
-	docker run --network calc-test-api --name api-tests --env PYTHONPATH=/opt/calc --env BASE_URL=http://apiserver:5000/ -w /opt/calc calculator-app:latest pytest --junit-xml=results/api_result.xml -m api  || true
+	sleep 5 # Espera 5 segundos para que el servicio esté listo
+	docker run --network calc-test-api --name api-tests --env PYTHONPATH=/opt/calc --env BASE_URL=http://apiserver:5000/ -w /opt/calc calculator-app:latest pytest --junit-xml=results/api_result.xml -m api || true
 	docker cp api-tests:/opt/calc/results ./
 	docker stop apiserver || true
 	docker rm --force apiserver || true
