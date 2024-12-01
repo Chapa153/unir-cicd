@@ -38,8 +38,8 @@ pipeline {
             }
         }
     }
-    /*post {
-        failure {
+    post {
+        /*failure {
             mail to: 'team@example.com',
                 subject: "Pipeline Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: "The pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} has failed. Please check Jenkins for more details."
