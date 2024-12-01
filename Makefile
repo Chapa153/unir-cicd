@@ -38,11 +38,12 @@ test-e2e:
 	docker cp ./test/e2e/cypress.json e2e-tests:/cypress.json
 	docker cp ./test/e2e/cypress e2e-tests:/cypress
 	docker start -a e2e-tests || true
-	docker cp e2e-tests:/results ./  || true
-	docker rm --force apiserver  || true
+	docker cp e2e-tests:/results/cypress_result.xml ./results/e2e_result.xml || true
+	docker rm --force apiserver || true
 	docker rm --force calc-web || true
 	docker rm --force e2e-tests || true
 	docker network rm calc-test-e2e || true
+
 
 run-web:
 	docker run --rm --volume `pwd`/web:/usr/share/nginx/html  --volume `pwd`/web/constants.local.js:/usr/share/nginx/html/constants.js --name calc-web -p 80:80 nginx
